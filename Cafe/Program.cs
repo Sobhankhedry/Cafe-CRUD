@@ -225,8 +225,7 @@ namespace HelloWorldApp
                                 }
 
                                 sr.Close();
-                                int input = Int32.Parse(Console.ReadLine());
-                                Console.WriteLine(input);
+
                                 break;
                             }
                             if (Do == 4)
