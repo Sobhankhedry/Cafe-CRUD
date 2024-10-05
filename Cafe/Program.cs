@@ -8,7 +8,9 @@ namespace HelloWorldApp
 
         static void Main(string[] args)
         {
-            string filePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Customers.txt";
+            string CustomerfilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Customers.txt";
+            string readingIngrediants = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Ingrediants.txt";
+
             while (true)
             {
                 Console.WriteLine("0_Login \n" +
@@ -18,9 +20,9 @@ namespace HelloWorldApp
 
                 if (first == 1)
                 {
-                    string[] existingCustomers = File.ReadAllLines(filePath);
+                    string[] existingCustomers = File.ReadAllLines(CustomerfilePath);
                     int customerCount = existingCustomers.Length;
-                    StreamWriter sw = File.AppendText(filePath);
+                    StreamWriter sw = File.AppendText(CustomerfilePath);
                     Customer customer = new Customer();
                     customer.ID = customerCount++;
                     sw.Write(" ID : " + customer.ID);
@@ -49,7 +51,7 @@ namespace HelloWorldApp
                     string username = Console.ReadLine();
                     Console.WriteLine("enter your password : ");
                     string password = Console.ReadLine();
-                    string[] gettingCustomers = File.ReadAllLines(filePath);
+                    string[] gettingCustomers = File.ReadAllLines(CustomerfilePath);
                     string[] customers = new string[gettingCustomers.Length];
                     int flag = 0;
                     int blag = 0;
@@ -163,7 +165,76 @@ namespace HelloWorldApp
                             }
                             if (Do == 3)
                             {
+                                StreamReader sr = new StreamReader(readingIngrediants);
 
+                                Ingredients ing = new Ingredients();
+
+
+                                string line = sr.ReadLine();
+                                string[] words;
+                                int extractId = 0;
+                                while (line != null)
+                                {
+
+                                    words = line.Split(",");
+
+                                    //extracting ID
+                                    string t = "";
+                                    string findingId = words[0];
+                                    for (int i = 0; i < findingId.Length; i++)
+                                    {
+                                        if (Char.IsDigit(findingId[i]))
+                                            t += findingId[i];
+
+                                    }
+                                    if (t.Length > 0)
+                                    {
+                                        val = Int32.Parse(t);
+
+                                        ing.id = val;
+                                    }
+
+                                    //extracting username
+                                    string findingnamew = words[1];
+                                    string[] extractuserName = findingnamew.Split(":");
+                                    ing.ingredaintName = extractuserName[1];
+
+
+                                    //extracting Price
+                                    string findinprice = words[2];
+                                    string[] extracprice = findinprice.Split(":");
+                                    ing.Price = double.Parse(extracprice[1]);
+
+                                    Console.WriteLine($"{ing.id}_{ing.ingredaintName} price : {ing.Price}");
+
+                                    line = sr.ReadLine();
+
+                                    Dictionary<string, int> keyValues = new Dictionary<string, int>();
+                                    while (true)
+                                    {
+                                        Console.WriteLine("What would you like to Buy?");
+                                        string itemWant = Console.ReadLine();
+                                        Console.WriteLine("how many do you want?");
+                                        int qty = Int32.Parse(Console.ReadLine());
+
+                                        line = sr.ReadLine();
+                                        while (line != null)
+                                        {
+                                            if (line.Contains(itemWant))
+                                            {
+                                                keyValues.Add($"{itemWant}", qty);
+                                                break;
+                                            }
+                                        }
+                                        Console.WriteLine(keyValues.Keys);
+
+                                    }
+
+                                }
+                                sr.Close();
+                                int input = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine(input);
+                                break;
                             }
                             if (Do == 4)
                             {
