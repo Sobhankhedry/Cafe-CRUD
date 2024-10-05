@@ -8,7 +8,7 @@ namespace HelloWorldApp
 
         static void Main(string[] args)
         {
-            string filePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Data Base\Customers.txt";
+            string filePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Customers.txt";
             Console.WriteLine("0_Login \n" +
                               "1_SignUp  \n");
             var first = Int32.Parse(Console.ReadLine());
@@ -74,6 +74,25 @@ namespace HelloWorldApp
                             cus.ID = val;
                         }
 
+
+                        //extractin Username :
+                        string findingUsernamew = word[2];
+                        string[] extractuserName = findingUsernamew.Split(" ");
+                        cus.userName = extractuserName[3];
+
+
+                        //etracting password
+                        string findPassword = word[3];
+                        string[] extractPass = findPassword.Split(" ");
+                        cus.Password = extractPass[3];
+
+
+                        //extracting email
+                        string finemailw = word[4];
+                        string[] extractEmail = finemailw.Split(" ");
+                        cus.Mail = extractEmail[3];
+
+
                         flag = 1;
                         blag = 1;
                         break;
@@ -83,6 +102,8 @@ namespace HelloWorldApp
                     if ((customer.Contains($"Username : {username}")) && (customer.Contains($"Password : {password}")))
                     {
                         word = customer.Split(',');
+
+                        // extractinID
                         string findingId = word[0];
                         for (int i = 0; i < findingId.Length; i++)
                         {
@@ -97,6 +118,21 @@ namespace HelloWorldApp
                             cus.ID = val;
                         }
 
+                        //extractin Username :
+                        string findingUsernamew = word[2];
+                        string[] extractuserName = findingUsernamew.Split(" ");
+                        cus.userName = extractuserName[3];
+
+                        //etracting password
+                        string findPassword = word[3];
+                        string[] extractPass = findPassword.Split(" ");
+                        cus.Password = extractPass[3];
+
+                        //extracting email
+                        string finemailw = word[4];
+                        string[] extractEmail = finemailw.Split(" ");
+                        cus.Mail = extractEmail[3];
+
 
                         flag = 1;
                         break;
@@ -108,10 +144,12 @@ namespace HelloWorldApp
                 if ((flag == 1) && (blag == 1))
                 {
                     Console.WriteLine($"hello admin your ID is {cus.ID}");
+                    Console.WriteLine($" with {cus.Password} password and  {cus.Mail} email");
                 }
                 if (flag == 1 && blag == 0)
                 {
-                    Console.WriteLine($"Hello user your id is {cus.ID}");
+                    Console.WriteLine($"Hello user your id is {cus.ID} with {cus.userName} username");
+                    Console.WriteLine($" with {cus.Password} password  {cus.Mail} email");
                 }
                 if (flag == 0)
                 {
