@@ -82,6 +82,7 @@ namespace HelloWorldApp
 
                     if ((customer.Contains($"Username : {username}")) && (customer.Contains($"Password : {password}")))
                     {
+                        word = customer.Split(',');
                         string findingId = word[0];
                         for (int i = 0; i < findingId.Length; i++)
                         {
