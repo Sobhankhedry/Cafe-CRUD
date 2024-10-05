@@ -10,6 +10,7 @@ namespace HelloWorldApp
         {
             string CustomerfilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Customers.txt";
             string readingIngrediants = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Ingrediants.txt";
+            string ingrediantsCartFilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\IngrediantCart.txt";
 
             while (true)
             {
@@ -211,16 +212,53 @@ namespace HelloWorldApp
                                 }
 
                                 Dictionary<string, int> dic = new Dictionary<string, int>();
+                                string[] lord;
+                                string[] lerd;
                                 while (true)
                                 {
+                                    IngrediantsCart ic = new IngrediantsCart();
+
 
                                     Console.WriteLine("what do you want to order? (use $ to exit)");
                                     string itemWant = Console.ReadLine();
+
+
+                                    string[] gettingIngrediant = File.ReadAllLines(readingIngrediants);
+                                    Console.WriteLine(gettingIngrediant.Length + " is the length");
                                     if (itemWant == "$")
                                         break;
                                     Console.WriteLine("how many do you want?");
                                     int qty = Int32.Parse(Console.ReadLine());
                                     dic.Add(itemWant, qty);
+
+
+                                    foreach (string inger in gettingIngrediant)
+                                    {
+
+                                        if (inger.Contains($"{itemWant}"))
+                                        {
+
+                                            lord = inger.Split(",");
+
+
+                                            //extracting price 
+                                            string findingPrice = lord[2];
+                                            string[] exactPrice = findingPrice.Split(":");
+                                            double p = double.Parse(exactPrice[1]);
+                                            double fullp = p * qty;
+
+
+                                            string[] existingINgrediants = File.ReadAllLines(ingrediantsCartFilePath);
+                                            int ingCount = existingINgrediants.Length;
+                                            StreamWriter sw = File.AppendText(ingrediantsCartFilePath);
+                                            sw.Write($" ID : {ingCount} ");
+                                            sw.Write($", Name : {itemWant}");
+                                            sw.Write($", Price : {fullp}");
+                                            sw.WriteLine("");
+                                            sw.Close();
+
+                                        }
+                                    }
 
                                 }
 
