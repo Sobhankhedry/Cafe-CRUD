@@ -5,6 +5,6 @@
         public int ID { get; set; }
         public string? itemName { get; set; }
         public int Price { get; set; }
-        lis
+        List<Ingredients>? ingredients { get; set; }
     }
 }
