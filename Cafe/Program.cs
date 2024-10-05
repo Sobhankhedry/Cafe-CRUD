@@ -205,32 +205,25 @@ namespace HelloWorldApp
                                     string[] extracprice = findinprice.Split(":");
                                     ing.Price = double.Parse(extracprice[1]);
 
+
                                     Console.WriteLine($"{ing.id}_{ing.ingredaintName} price : {ing.Price}");
-
                                     line = sr.ReadLine();
+                                }
 
-                                    Dictionary<string, int> keyValues = new Dictionary<string, int>();
-                                    while (true)
-                                    {
-                                        Console.WriteLine("What would you like to Buy?");
-                                        string itemWant = Console.ReadLine();
-                                        Console.WriteLine("how many do you want?");
-                                        int qty = Int32.Parse(Console.ReadLine());
+                                Dictionary<string, int> dic = new Dictionary<string, int>();
+                                while (true)
+                                {
 
-                                        line = sr.ReadLine();
-                                        while (line != null)
-                                        {
-                                            if (line.Contains(itemWant))
-                                            {
-                                                keyValues.Add($"{itemWant}", qty);
-                                                break;
-                                            }
-                                        }
-                                        Console.WriteLine(keyValues.Keys);
-
-                                    }
+                                    Console.WriteLine("what do you want to order? (use $ to exit)");
+                                    string itemWant = Console.ReadLine();
+                                    if (itemWant == "$")
+                                        break;
+                                    Console.WriteLine("how many do you want?");
+                                    int qty = Int32.Parse(Console.ReadLine());
+                                    dic.Add(itemWant, qty);
 
                                 }
+
                                 sr.Close();
                                 int input = Int32.Parse(Console.ReadLine());
                                 Console.WriteLine(input);
