@@ -155,10 +155,24 @@ namespace HelloWorldApp
                             Console.WriteLine("2_Delete Item");
                             Console.WriteLine("3_Buy Ingrediants");
                             Console.WriteLine("4_Net(Sum of income and outcome)");
+                            Console.WriteLine("5_List of customers");
                             int Do = Int32.Parse(Console.ReadLine());
                             if (Do == 1)
                             {
+                                Console.WriteLine("insert the name of the item : ");
+                                string name = Console.ReadLine();
+                                Console.WriteLine("insert the price : ");
+                                double price = double.Parse(Console.ReadLine());
 
+                                string[] lin = File.ReadAllLines(readingIngrediants);
+                                int len = lin.Length;
+                                len++;
+                                StreamWriter sw = File.AppendText(readingIngrediants);
+                                sw.Write($" ID : {len} ");
+                                sw.Write($", Name : {name} ");
+                                sw.Write($", Price : {price}");
+                                sw.Write('\n');
+                                sw.Close();
                             }
                             if (Do == 2)
                             {
@@ -268,6 +282,19 @@ namespace HelloWorldApp
                             }
                             if (Do == 4)
                             {
+
+                            }
+                            if (Do == 5)
+                            {
+                                StreamReader sr = new StreamReader(CustomerfilePath);
+                                string line = sr.ReadLine();
+                                while (line != null)
+                                {
+                                    Console.WriteLine(line);
+                                    line = sr.ReadLine();
+                                }
+                                Console.WriteLine("\n");
+                                Console.WriteLine("\n");
 
                             }
                             else
