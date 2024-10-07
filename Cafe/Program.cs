@@ -311,6 +311,52 @@ namespace HelloWorldApp
                             }
                             else if (Do == 4)
                             {
+                                Console.WriteLine("\n");
+                                double income = 0;
+                                double outcome = 0;
+                                StreamReader sr1 = new StreamReader(ingrediantsCartFilePath);
+                                string line = sr1.ReadLine();
+                                string[] mord;
+                                string[] tord;
+                                Console.WriteLine("outcome : ");
+                                while (line != null)
+                                {
+                                    Console.WriteLine(line);
+                                    mord = line.Split(",");
+
+                                    string findPrice = mord[2];
+                                    string[] extractPrice = findPrice.Split(":");
+                                    outcome += double.Parse(extractPrice[1]);
+
+
+                                    line = sr1.ReadLine();
+                                }
+                                Console.WriteLine("\n");
+                                Console.WriteLine("income");
+                                StreamReader sr2 = new StreamReader(userCartFilePath);
+                                string mine = sr2.ReadLine();
+                                while (mine != null)
+                                {
+                                    Console.WriteLine(mine);
+
+                                    tord = mine.Split(",");
+                                    Console.WriteLine(line);
+                                    string findingp = tord[5];
+                                    string[] extractPrice = findingp.Split(":");
+                                    income += double.Parse(extractPrice[1]);
+                                    mine = sr2.ReadLine();
+                                }
+
+                                if (income > outcome)
+                                {
+                                    double profit = income - outcome;
+                                    Console.WriteLine($"we are on {profit} financial profit");
+                                }
+                                else
+                                {
+                                    double loss = outcome - income;
+                                    Console.WriteLine($"we are on {loss} financial loss");
+                                }
 
                             }
                             else if (Do == 5)
