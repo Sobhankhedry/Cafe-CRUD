@@ -12,6 +12,7 @@ namespace HelloWorldApp
             string readingIngrediants = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Ingrediants.txt";
             string ingrediantsCartFilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\IngrediantCart.txt";
             string itemsFilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Items.txt";
+            string userCartFilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\UserCart.txt";
 
             while (true)
             {
@@ -49,8 +50,10 @@ namespace HelloWorldApp
                 Customer cus = new Customer();
                 if (first == 0)
                 {
+                    Console.WriteLine("\n");
                     Console.WriteLine("enter your username : ");
                     string username = Console.ReadLine();
+                    Console.WriteLine("\n");
                     Console.WriteLine("enter your password : ");
                     string password = Console.ReadLine();
                     string[] gettingCustomers = File.ReadAllLines(CustomerfilePath);
@@ -331,13 +334,111 @@ namespace HelloWorldApp
                     }
                     if (flag == 1 && blag == 0)
                     {
-                        Console.WriteLine($"welcome user your id is {cus.ID} with {cus.userName} username");
-                        Console.WriteLine($" with {cus.Password} password  {cus.Mail} email");
-                        break;
+                        Console.WriteLine("what do you want to do?");
+                        Console.WriteLine("1_Order");
+                        Console.WriteLine("2_update personal information");
+                        int Do = Int32.Parse(Console.ReadLine());
+
+                        if (Do == 1)
+                        {
+                            int x = 0;
+                            UserCart userCart = new UserCart();
+                            while (true)
+                            {
+                                Console.WriteLine("\n");
+                                StreamReader sr = new StreamReader(itemsFilePath);
+                                string line = sr.ReadLine();
+                                while (line != null)
+                                {
+                                    Console.WriteLine(line);
+                                    line = sr.ReadLine();
+                                }
+                                Console.WriteLine("\n");
+                                Console.WriteLine("what do you want? (use $ to exit)");
+                                string itemWant = Console.ReadLine();
+                                if (itemWant == "$")
+                                {
+                                    x = 1;
+                                    break;
+                                }
+                                Console.WriteLine("\n");
+                                Console.WriteLine("how many do you want?");
+                                int qty = Int32.Parse(Console.ReadLine());
+
+                                userCart.Qty = qty;
+                                userCart.UserID = cus.ID;
+                                sr = new StreamReader(itemsFilePath);
+                                line = sr.ReadLine();
+                                string[] uword = new string[100];
+                                int bal = 0;
+                                while (line != null)
+                                {
+                                    if (line.Contains(itemWant))
+                                    {
+                                        uword = line.Split(',');
+
+                                        //extracting ID
+                                        string findingId = uword[0];
+                                        for (int i = 0; i < findingId.Length; i++)
+                                        {
+                                            if (Char.IsDigit(findingId[i]))
+                                                b += findingId[i];
+                                        }
+
+                                        if (b.Length > 0)
+                                        {
+                                            bal = int.Parse(b);
+                                            userCart.ItemID = val;
+                                        }
+
+
+                                        //extracting item name
+                                        string findingName = uword[1];
+                                        string[] extractName = findingName.Split(":");
+                                        userCart.ItemName = extractName[1];
+
+                                        //extract item price
+                                        string findPrice = uword[2];
+                                        string[] extractPrice = findPrice.Split(":");
+                                        double temp = double.Parse(extractPrice[1]);
+                                        userCart.ItemPrice = temp * qty;
+
+                                        string[] lin = File.ReadAllLines(userCartFilePath);
+                                        int len = lin.Length;
+                                        len++;
+                                        StreamWriter sw = File.AppendText(userCartFilePath);
+                                        Console.WriteLine("Im here bit");
+                                        sw.Write($"ID : {len}");
+                                        sw.Write($" , UserID : {userCart.UserID}");
+                                        sw.Write($" , ItemID : {userCart.ItemID}");
+                                        sw.Write($" , ItemName : {userCart.ItemName}");
+                                        sw.Write($" , Qty : {userCart.Qty}");
+                                        sw.Write($" , ItemPrice : {userCart.ItemPrice}");
+                                        sw.Write('\n');
+                                        sw.Close();
+                                        break;
+
+                                    }
+                                    line = sr.ReadLine();
+                                }
+                            }
+
+
+
+                        }
+                        else if (Do == 2)
+                        {
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("something went wrong!!");
+                        }
+
                     }
                     if (flag == 0)
                     {
-                        Console.WriteLine("USername or password is wrong \n");
+                        Console.WriteLine("Username or password is wrong \n");
 
                     }
 
