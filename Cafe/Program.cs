@@ -11,6 +11,7 @@ namespace HelloWorldApp
             string CustomerfilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Customers.txt";
             string readingIngrediants = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Ingrediants.txt";
             string ingrediantsCartFilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\IngrediantCart.txt";
+            string itemsFilePath = @"C:\Users\sobha\OneDrive\Desktop\Sobhan\University\term 5\Database\Items.txt";
 
             while (true)
             {
@@ -150,6 +151,7 @@ namespace HelloWorldApp
                     {
                         while (true)
                         {
+                            Console.WriteLine("\n");
                             Console.WriteLine("what do you want to do?");
                             Console.WriteLine("1_Insert Item");
                             Console.WriteLine("2_Delete Item");
@@ -164,21 +166,45 @@ namespace HelloWorldApp
                                 Console.WriteLine("insert the price : ");
                                 double price = double.Parse(Console.ReadLine());
 
-                                string[] lin = File.ReadAllLines(readingIngrediants);
+                                string[] lin = File.ReadAllLines(itemsFilePath);
                                 int len = lin.Length;
                                 len++;
-                                StreamWriter sw = File.AppendText(readingIngrediants);
-                                sw.Write($" ID : {len} ");
+                                StreamWriter sw = File.AppendText(itemsFilePath);
+                                sw.Write($"ID : {len} ");
                                 sw.Write($", Name : {name} ");
                                 sw.Write($", Price : {price}");
                                 sw.Write('\n');
                                 sw.Close();
-                            }
-                            if (Do == 2)
-                            {
+                                Console.WriteLine("ItemAdded");
+                                Console.WriteLine("\n");
+                                Console.WriteLine("\n");
 
                             }
-                            if (Do == 3)
+                            else if (Do == 2)
+                            {
+                                Console.WriteLine("what do you want to delete? \n");
+                                string itemD = Console.ReadLine();
+                                var lines = File.ReadAllLines(itemsFilePath).ToList();
+                                bool itemDelted = false;
+
+                                for (int i = lines.Count - 1; i >= 0; i--)
+                                {
+                                    if (lines[i].Contains(itemD))
+                                    {
+                                        lines.RemoveAt(i);
+                                        itemDelted = true;
+                                    }
+                                }
+                                File.WriteAllLines(itemsFilePath, lines);
+                                if (itemDelted)
+                                {
+                                    Console.WriteLine("item deleted \n");
+                                }
+
+
+
+                            }
+                            else if (Do == 3)
                             {
                                 StreamReader sr = new StreamReader(readingIngrediants);
 
@@ -280,11 +306,11 @@ namespace HelloWorldApp
 
                                 break;
                             }
-                            if (Do == 4)
+                            else if (Do == 4)
                             {
 
                             }
-                            if (Do == 5)
+                            else if (Do == 5)
                             {
                                 StreamReader sr = new StreamReader(CustomerfilePath);
                                 string line = sr.ReadLine();
